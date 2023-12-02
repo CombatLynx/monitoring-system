@@ -1,6 +1,15 @@
 <template>
   <div>GeneralInformation</div>
+  <BarChart />
 </template>
 
-<script setup>
+<script>
+import BarChart from "@/components/BarChart.vue";
+
+export default {
+  components: {BarChart},
+  mounted() {
+
+  }
+}
 </script>
