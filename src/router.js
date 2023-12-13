@@ -8,15 +8,15 @@ const routes = [
     },
     {
         path: "/general-information",
-        component: () => import('./components/GeneralInformation.vue')
+        component: () => import('./components/GeneralInformation/GeneralInformation.vue')
     },
     {
         path: "/building-report",
-        component: () => import('./components/BuildingReport.vue')
+        component: () => import('./components/BuildingReport/BuildingReport.vue')
     },
     {
         path: "/plotting-reports",
-        component: () => import('./components/PlottingReports.vue')
+        component: () => import('./components/PlottingReports/PlottingReports.vue')
     }
 ];
 

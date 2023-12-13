@@ -27,6 +27,11 @@ export default {
 </script>
 
 <style>
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
 * {
   margin: 0;
   padding: 0;
@@ -34,6 +39,7 @@ export default {
 }
 .app-wrapper {
   width: 100%;
+  position: relative;
 }
 .app-wrapper__container {
   display: grid;
@@ -42,11 +48,11 @@ export default {
     "n m m";
   grid-template-rows: 100px 1fr;
   grid-template-columns: 80px 1fr;
+  height: 100vh;
 }
 .main-content {
   grid-area: m;
   background: #fbfbfb;
   padding: 20px;
-  height: 100vh;
 }
 </style>
