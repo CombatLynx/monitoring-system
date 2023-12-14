@@ -1,8 +1,14 @@
 <template>
   <div class="page">
-    <button class="show-modal-button" @click="showModal">Показать модальное окно</button>
-    <modal-window ref="modal">
-      <template v-slot:title>
+    <ModalWindow
+        v-show="isShowModal"
+        :show="isShowModal"
+        :scrollable="true"
+        header-id="modalHeader"
+        body-id="modalBody"
+        @close="toggleModal"
+    >
+      <template v-slot:header>
         <h3 class="modal-title">Выберете параметры</h3>
       </template>
       <template v-slot:body>
@@ -17,7 +23,10 @@
       <template v-slot:footer>
         <button class="modal-footer__button" @click="sendDataFunction">Отправить</button>
       </template>
-    </modal-window>
+    </ModalWindow>
+    <button @click="toggleModal">
+      Open Modal
+    </button>
   </div>
   <div class="bar-wrapper">
     <div class="bar-block">
@@ -29,12 +38,13 @@
 </template>
 <script>
 import Chart from 'chart.js/auto'
-import ModalWindow from "@/components/PlottingReports/SettingsWindowForPlottingReports.vue"
+import ModalWindow from "@/utils/ModalWindow.vue"
 export default {
   name: 'ChartSliderForSystem',
   components: {ModalWindow},
   data: () => ({
     clickedItems: [],
+    isShowModal: false,
     loading: true,
     dataChart: [10, 39, 10, 40, 39, 0, 10],
     records: [
@@ -48,10 +58,12 @@ export default {
     ]
   }),
   mounted() {
-    this.showModal()
     this.renderLineChart()
   },
   methods: {
+    toggleModal() {
+      this.isShowModal = !this.isShowModal;
+    },
     onSelect(item) {
       let position;
       position = this.clickedItems.indexOf(item)
@@ -62,16 +74,10 @@ export default {
       }
       console.log(this.clickedItems)
     },
-    showModal: function() {
-      this.$refs.modal.show = true
-    },
-    closeModal: function() {
-      this.$refs.modal.show = false
-    },
     sendDataFunction: function() {
       this.changeData()
       this.dataChart = [6, 6, 3, 5, 5, 6, 6, 6, 3, 5, 5, 6]
-      this.closeModal()
+      this.toggleModal()
       console.log('clickedItems', this.clickedItems)
     },
     renderLineChart: function() {
@@ -163,6 +169,7 @@ div.active {
   background: yellow;
 }
 .item-list {
+  cursor: pointer;
   margin: 10px auto;
 }
 .bar-wrapper {
