@@ -129,12 +129,13 @@ export default {
     max-width: 500px;
     margin: 1.75rem auto;
     padding: 20px 30px;
-    border-radius: 5px;
     color: #000;
     background-color: #fff;
     box-sizing: border-box;
     transform: translate(0, 0);
     transition: all 0.3s ease;
+    border-radius: 10px;
+    border: 5px solid #C5C4C4;
   }
 
   &-header {
@@ -143,12 +144,20 @@ export default {
     text-align: center;
   }
 
+  &-body {
+    margin-bottom: 10px;
+  }
+
   &-footer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     height: 80px;
     text-align: center;
+  }
+
+  &-footer button {
+    padding: 5px 0 5px 0;
   }
 
   &-enter,

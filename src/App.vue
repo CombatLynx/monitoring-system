@@ -55,4 +55,9 @@ body {
   background: #fbfbfb;
   padding: 20px;
 }
+button {
+  cursor: pointer;
+  padding: 2px 5px 2px 5px;
+  border-radius: 5px;
+}
 </style>

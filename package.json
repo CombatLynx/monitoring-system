@@ -11,6 +11,7 @@
     "chart.js": "4.4.0",
     "core-js": "3.8.3",
     "export-from-json": "1.7.3",
+    "primevue": "3.44.0",
     "vue": "3.2.45",
     "vue-chartjs": "5.2.0",
     "vue-router": "4.2.5",

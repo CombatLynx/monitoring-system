@@ -58,6 +58,7 @@ export default {
     ]
   }),
   mounted() {
+    this.toggleModal()
     this.renderLineChart()
   },
   methods: {
@@ -166,11 +167,13 @@ export default {
 
 <style scoped>
 div.active {
-  background: yellow;
+  background: #efefef;
+  border-radius: 5px;
 }
 .item-list {
   cursor: pointer;
   margin: 10px auto;
+  padding: 5px 0 5px 0;
 }
 .bar-wrapper {
   display: flex;

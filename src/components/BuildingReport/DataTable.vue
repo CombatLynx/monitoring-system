@@ -23,25 +23,30 @@
       <button class="modal-footer__button" @click="sendDataFunction">Отправить</button>
     </template>
   </ModalWindow>
-  <button @click="toggleModal">
-    Open Modal
-  </button>
-  <span>search field:</span>
-  <select v-model="searchField">
-    <option v-for="(head, index) in headers"
-            :key="index"
-    >{{ head.value }}
-    </option>
-  </select>
-  <button @click="exportData">Download file</button>
-  <span>search value: </span>
-  <input type="text" v-model="searchValue">
-  <EasyDataTable
-      v-bind:headers="headers"
-      :items="records"
-      :search-field="searchField"
-      :search-value="searchValue"
-  />
+  <button class="set-modal" @click="toggleModal">Задать параметры</button>
+  <div>
+    <span>Выберете столбец для поиска:</span>
+    <select v-model="searchField">
+      <option v-for="(head, index) in headers"
+              :key="index"
+      >{{ head.value }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <span>Строка поиска:</span>
+    <input type="text" v-model="searchValue">
+  </div>
+  <div class="wrapper__data-table">
+    <EasyDataTable
+        v-bind:headers="headers"
+        :items="records"
+        :search-field="searchField"
+        :search-value="searchValue"
+        class="customize-table"
+    />
+  </div>
+  <button @click="exportData">Скачать в .xls</button>
 </template>
 
 <script>
@@ -70,6 +75,9 @@ export default defineComponent({
   components: {
     ModalWindow,
     EasyDataTable: EasyDataTable
+  },
+  mounted() {
+    this.toggleModal()
   },
   setup() {
     const searchField = ref("")
@@ -104,23 +112,23 @@ export default defineComponent({
       "Дата отчета"
     ],
     headers: [
-      {text: "Наименование ВМ", value: "vm_name"},
-      {text: "Комментарий", value: "vm_comment"},
-      {text: "Описание", value: "vm_description"},
-      {text: "Количество ядер CPU", value: "vm_cpu"},
-      {text: "Объем ОЗУ, Мб", value: "vm_memory"},
+      {text: "Наименование ВМ", value: "vm_name", sortable: true},
+      {text: "Комментарий", value: "vm_comment", sortable: true},
+      {text: "Описание", value: "vm_description", sortable: true},
+      {text: "Количество ядер CPU", value: "vm_cpu", sortable: true},
+      {text: "Объем ОЗУ, Мб", value: "vm_memory", sortable: true},
       {text: "Объем ОЗУ, ед.изм", value: "vm_memory_beauty", sortable: true},
-      {text: "Объем ПЗУ, Гб", value: "vm_disk_size"},
-      {text: "Объем ПЗУ, ед.изм", value: "vm_disk_size_beauty"},
-      {text: "Операционная система", value: "vm_os_distribution"},
-      {text: "Семейство ОС", value: "vm_os_family"},
-      {text: "Версия ОС", value: "vm_os_version"},
-      {text: "Кодовое наименование ОС", value: "vm_os_codename"},
-      {text: "IP адрес сетевого адаптера", value: "vm_nics"},
-      {text: "Наименование ИС", value: "System"},
-      {text: "Владелец ", value: "Owner"},
-      {text: "Приоритет восстановления", value: "Priority"},
-      {text: "Дата отчета", value: "report_date"}
+      {text: "Объем ПЗУ, Гб", value: "vm_disk_size", sortable: true},
+      {text: "Объем ПЗУ, ед.изм", value: "vm_disk_size_beauty", sortable: true},
+      {text: "Операционная система", value: "vm_os_distribution", sortable: true},
+      {text: "Семейство ОС", value: "vm_os_family", sortable: true},
+      {text: "Версия ОС", value: "vm_os_version", sortable: true},
+      {text: "Кодовое наименование ОС", value: "vm_os_codename", sortable: true},
+      {text: "IP адрес сетевого адаптера", value: "vm_nics", sortable: true},
+      {text: "Наименование ИС", value: "System", sortable: true},
+      {text: "Владелец ", value: "Owner", sortable: true},
+      {text: "Приоритет восстановления", value: "Priority", sortable: true},
+      {text: "Дата отчета", value: "report_date", sortable: true}
     ],
     records: [
       {
@@ -192,11 +200,63 @@ export default defineComponent({
 
 <style scoped>
 div.active {
-  background: yellow;
+  background: #efefef;
+  border-radius: 5px;
 }
-
 .item-list {
   cursor: pointer;
   margin: 10px auto;
+  padding: 5px 0 5px 0;
+}
+.customize-table {
+  //--easy-table-border: 1px solid #445269;
+  //--easy-table-row-border: 1px solid #445269;
+
+  //--easy-table-header-font-size: 14px;
+  --easy-table-header-height: 100px;
+  //--easy-table-header-font-color: #c1cad4;
+  --easy-table-header-background-color: #74BBE4;
+
+  --easy-table-header-item-padding: 10px 15px;
+
+  //--easy-table-body-even-row-font-color: #fff;
+  //--easy-table-body-even-row-background-color: #4c5d7a;
+
+  //--easy-table-body-row-font-color: #c0c7d2;
+  //--easy-table-body-row-background-color: #2d3a4f;
+  --easy-table-body-row-height: 50px;
+  //--easy-table-body-row-font-size: 14px;
+
+  --easy-table-body-row-hover-font-color: #2d3a4f;
+  --easy-table-body-row-hover-background-color: #eee;
+
+  --easy-table-body-item-padding: 10px 15px;
+
+  //--easy-table-footer-background-color: #2d3a4f;
+  //--easy-table-footer-font-color: #c0c7d2;
+  --easy-table-footer-font-size: 14px;
+  --easy-table-footer-padding: 0px 10px;
+  --easy-table-footer-height: 70px;
+
+  --easy-table-rows-per-page-selector-width: 70px;
+  --easy-table-rows-per-page-selector-option-padding: 10px;
+  --easy-table-rows-per-page-selector-z-index: 1;
+
+
+  /*--easy-table-scrollbar-track-color: #2d3a4f;*/
+  /*--easy-table-scrollbar-color: #2d3a4f;*/
+  /*--easy-table-scrollbar-thumb-color: #4c5d7a;;*/
+  /*--easy-table-scrollbar-corner-color: #2d3a4f;*/
+
+  //--easy-table-loading-mask-background-color: #2d3a4f;
+}
+.customize-table thead th {
+  background-color: #f0f2f5;
+}
+.customize-table thead th:first-child {
+  border-radius: 10px 0 0 0;
+}
+.customize-table thead th:last-child {
+  border-radius: 0 10px 0 0;
 }
 </style>
