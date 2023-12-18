@@ -31,12 +31,7 @@
             </section>
             <footer :class="`${modalClass}-footer`">
               <slot name="footer"/>
-              <button
-                  type="button"
-                  @click="closeModal"
-              >
-                Close
-              </button>
+              <Button label="Закрыть" @click="closeModal"/>
             </footer>
           </div>
         </div>

@@ -67,6 +67,7 @@ a.router-link-active {
   left: 100%;
   padding: 5px;
   border-radius: 5px;
+  z-index: 1;
 }
 .navbar-item:hover .overlay {
   display: block;

@@ -1,14 +1,13 @@
 <template>
-  <div>BuildingReports</div>
-  <DataTable></DataTable>
+  <DataTablePrime></DataTablePrime>
 </template>
 
 <script>
 
-import {defineComponent} from "vue";
-import DataTable from "@/components/BuildingReport/DataTable.vue";
+import {defineComponent} from "vue"
+import DataTablePrime from "@/components/BuildingReport/DataTablePrime.vue"
 
 export default defineComponent({
-  components: {DataTable}
+  components: {DataTablePrime}
 })
 </script>
