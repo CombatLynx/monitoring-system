@@ -43,6 +43,7 @@
 import Chart from 'chart.js/auto'
 import ModalWindow from "@/utils/ModalWindow.vue"
 import {dataTable} from "@/data/DataTable"
+import ChartDataLabels from "chartjs-plugin-datalabels";
 export default {
   name: 'ChartSliderForSystem',
   components: {ModalWindow},
@@ -124,12 +125,30 @@ export default {
               label: '',
               data: data.map(row => row.vm_cpu),
               backgroundColor: [
-                '#55a955'
+                '#458a45'
               ]
             }
           ]
         },
+        plugins: [ChartDataLabels],
         options: {
+          plugins: {
+            datalabels: {
+              align: 'top',
+              color: ['black'],
+              font: {
+                size: '14px'
+              }
+            },
+            legend: {
+              position: 'top',
+              labels: {
+                font: {
+                  size: '20px'
+                }
+              }
+            }
+          },
           indexAxis: 'x',
           maintainAspectRatio: false,
           responsive: true
@@ -145,12 +164,30 @@ export default {
               label: '',
               data: data.map(row => row.vm_memory),
               backgroundColor: [
-                '#55a955'
+                '#458a45'
               ]
             }
           ]
         },
+        plugins: [ChartDataLabels],
         options: {
+          plugins: {
+            datalabels: {
+              align: 'top',
+              color: ['black'],
+              font: {
+                size: '14px'
+              }
+            },
+            legend: {
+              position: 'top',
+              labels: {
+                font: {
+                  size: '20px'
+                }
+              }
+            }
+          },
           indexAxis: 'x',
           maintainAspectRatio: false,
           responsive: true
@@ -166,12 +203,30 @@ export default {
               label: '',
               data: data.map(row => row.vm_disk_size),
               backgroundColor: [
-                '#55a955'
+                '#458a45'
               ]
             }
           ]
         },
+        plugins: [ChartDataLabels],
         options: {
+          plugins: {
+            datalabels: {
+              align: 'top',
+              color: ['black'],
+              font: {
+                size: '14px'
+              }
+            },
+            legend: {
+              position: 'top',
+              labels: {
+                font: {
+                  size: '20px'
+                }
+              }
+            }
+          },
           indexAxis: 'x',
           maintainAspectRatio: false,
           responsive: true

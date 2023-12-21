@@ -72,7 +72,7 @@ body {
   padding: 20px;
 }
 .p-button {
-  background: #55a955;
+  background: #458a45;
   border: 1px solid #3c773c;
 }
 .p-button:not(:disabled):hover {

@@ -16,6 +16,7 @@ import Chart from 'chart.js/auto'
 import {recordsTop10Cpu} from "@/data/RecordsTop10Cpu"
 import {recordsTop10Memory} from "@/data/RecordsTop10Memory"
 import {recordsTop10DiskSize} from "@/data/RecordsTop10DiskSize"
+import ChartDataLabels from "chartjs-plugin-datalabels";
 export default {
   name: 'ChartSliderForVM',
   data: () => ({
@@ -49,12 +50,31 @@ export default {
             label: '',
             data: dataCpu.map(row => row.vm_cpu).reverse(),
             backgroundColor: [
-              '#55a955'
+              '#458a45'
             ]
           }
         ]
       },
+      plugins: [ChartDataLabels],
       options: {
+        cutout: 35,
+        plugins: {
+          datalabels: {
+            align: 'center',
+            color: ['white'],
+            font: {
+              size: '14px'
+            }
+          },
+          legend: {
+            position: 'top',
+            labels: {
+              font: {
+                align: 'end',
+              }
+            }
+          }
+        },
         indexAxis: 'y',
         maintainAspectRatio: false,
         responsive: true
@@ -70,12 +90,31 @@ export default {
             label: '',
             data: dataMemory.map(row => row.vm_memory).reverse(),
             backgroundColor: [
-              '#55a955'
+              '#458a45'
             ]
           }
         ]
       },
+      plugins: [ChartDataLabels],
       options: {
+        cutout: 35,
+        plugins: {
+          datalabels: {
+            align: 'center',
+            color: ['white'],
+            font: {
+              size: '14px'
+            }
+          },
+          legend: {
+            position: 'top',
+            labels: {
+              font: {
+                align: 'end',
+              }
+            }
+          }
+        },
         indexAxis: 'y',
         maintainAspectRatio: false,
         responsive: true
@@ -91,12 +130,31 @@ export default {
             label: '',
             data: dataDiskSize.map(row => row.vm_disk_size).reverse(),
             backgroundColor: [
-              '#55a955'
+              '#458a45'
             ]
           }
         ]
       },
+      plugins: [ChartDataLabels],
       options: {
+        cutout: 35,
+        plugins: {
+          datalabels: {
+            align: 'center',
+            color: ['white'],
+            font: {
+              size: '14px'
+            }
+          },
+          legend: {
+            position: 'top',
+            labels: {
+              font: {
+                align: 'end',
+              }
+            }
+          }
+        },
         indexAxis: 'y',
         maintainAspectRatio: false,
         responsive: true

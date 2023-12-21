@@ -122,7 +122,7 @@ export default {
     justify-content: space-between;
     width: 100%;
     max-width: 500px;
-    margin: 1.75rem auto;
+    margin: 5.4rem auto;
     padding: 20px 30px;
     color: #000;
     background-color: #fff;

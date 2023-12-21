@@ -158,8 +158,8 @@ export default {
   color: #656565;
 }
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background: #55a955;
-  border-color: #55a955;
+  background: #458a45;
+  border-color: #458a45;
   color: white;
 }
 .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
@@ -179,7 +179,7 @@ export default {
   width: 50px;
 }
 .p-dropdown:not(.p-disabled):hover {
-  border-color: #55a955;
+  border-color: #458a45;
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
   background: #55a95587;
@@ -192,7 +192,7 @@ export default {
   padding: 4px 6px 4px 6px;
 }
 .p-datatable-table td {
-  padding: 4px 6px 4px 20px;
+  padding: 8px 6px 8px 20px;
 }
 .p-column-header-content svg {
   width: 25px;

@@ -10,12 +10,12 @@
           <canvas class="canvas-pie" id="myChart"></canvas>
         </div>
       </div>
-      <div class="header-item">ОЗУ (Мб)</div>
+      <div class="header-item">ОЗУ (Гб)</div>
       <div class="wrapper-item">
         <div class="doughnut-item">
           <div class="value">
             <div class="max-value">{{ recordsTotalMax.vm_memory_max }}</div>
-            <div class="type-value">Мб</div>
+            <div class="type-value">Гб</div>
           </div>
           <canvas class="canvas-pie" id="myChart2"></canvas>
         </div>
@@ -36,6 +36,7 @@
 <script>
 import Chart from 'chart.js/auto'
 import {dataTable} from "@/data/DataTable"
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 export default {
   name: 'PieCharts',
@@ -44,12 +45,12 @@ export default {
     dataset: dataTable,
     recordsCurrentMax: {
         vm_cpu_max: 1646,
-        vm_memory_max: 4106213,
+        vm_memory_max: 4009,
         vm_disk_size_max: 159023
     },
     recordsTotalMax: {
         vm_cpu_max: 5000,
-        vm_memory_max: 6000000,
+        vm_memory_max: 5859,
         vm_disk_size_max: 200000
     },
     records: [
@@ -103,81 +104,47 @@ export default {
     const recordsCurrentMaxDiskSize = this.recordsCurrentMax.vm_disk_size_max
 
     const recordsTotalMaxCpu = this.recordsTotalMax.vm_cpu_max
-    const recordsTotalMaxMemory = this.recordsTotalMax.vm_memory_max
+    const recordsTotalMaxMemory =  this.recordsTotalMax.vm_memory_max
     const recordsTotalMaxDiskSize = this.recordsTotalMax.vm_disk_size_max
 
-    const percentCpu = ((recordsCurrentMaxCpu / recordsTotalMaxCpu) * 100).toFixed(2)
-    const percentMemory = ((recordsCurrentMaxMemory / recordsTotalMaxMemory) * 100).toFixed(2)
-    const percentDiskSize = ((recordsCurrentMaxDiskSize / recordsTotalMaxDiskSize) * 100).toFixed(2)
+    const percentCpu = ((recordsCurrentMaxCpu / recordsTotalMaxCpu) * 100).toFixed(0)
+    const percentMemory = ((recordsCurrentMaxMemory / recordsTotalMaxMemory) * 100).toFixed(0)
+    const percentDiskSize = ((recordsCurrentMaxDiskSize / recordsTotalMaxDiskSize) * 100).toFixed(0)
 
-    // const topLabels = {
-    //   id: 'topLabels',
-    //   afterDatasetsDraw(chart) {
-    //     const { ctx } = chart
-    //     ctx.font = 'bold 40px sans-serif'
-    //     ctx.fillStyle = 'blue'
-    //   }
-    // }
-
-    // const centerDoughnutPlugin = {
-    //   id: "annotateDoughnutCenter",
-    //   beforeDraw: (chart) => {
-    //     let width = chart.width;
-    //     let height = chart.height;
-    //     let ctx = chart.ctx;
-    //
-    //     ctx.restore();
-    //     let fontSize = (height / 114).toFixed(2);
-    //     ctx.font = fontSize + "em sans-serif";
-    //     ctx.textBaseline = "middle";
-    //
-    //     let text = "75%";
-    //     let textX = Math.round((width - ctx.measureText(text).width) / 2);
-    //     let textY = height / 1.87;
-    //
-    //     console.log("text x: ", textX);
-    //     console.log("text y: ", textY);
-    //
-    //     ctx.fillText(text, textX, textY);
-    //     ctx.save();
-    //   },
-    // };
-    //
-    // // Register Donut Plugin
-    // Chart.register(centerDoughnutPlugin);
+    // Chart.register(ChartDataLabels);
 
     new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: [ 'Текущие значения', 'Текущая утилизация', 'Свободное место'],
+        labels: [ 'Текущие значения', 'Текущая утилизация %', 'Свободное место'],
         datasets: [{
           data: [recordsCurrentMaxCpu, null, recordsTotalMaxCpu - recordsCurrentMaxCpu],
           backgroundColor: [
-            '#55a955',
+            '#458a45',
             '#656565',
-            'lightgrey'
+            '#e7e7e7'
           ]
         },
         {
           data: [null, percentCpu, percentFull - percentCpu],
           backgroundColor: [
-            '#55a955',
+            '#458a45',
             '#656565',
-            'lightgrey'
+            '#e7e7e7'
           ]
         }]
       },
+      plugins: [ChartDataLabels],
       options: {
-        scales: {
-          // x: {
-          //   stacked: true
-          // },
-          // y: {
-          //   stacked: true,
-          //   beginAtZero: true
-          // }
-        },
+        cutout: 35,
         plugins: {
+          datalabels: {
+            color: ['white', 'white', 'black', 'black'],
+            font: {
+              // weight: 'bold',
+              size: '14px'
+            }
+          },
           legend: {
             position: 'right',
             labels: {
@@ -187,42 +154,41 @@ export default {
             }
           }
         }
-        // plugins: [ChartDataLabels, topLabels]
       }
     });
 
     new Chart(ctx2, {
       type: 'doughnut',
       data: {
-        labels: [ 'Текущие значения', 'Текущая утилизация', 'Свободное место'],
+        labels: [ 'Текущие значения', 'Текущая утилизация %', 'Свободное место'],
         datasets: [{
           data: [recordsCurrentMaxMemory, null, recordsTotalMaxMemory - recordsCurrentMaxMemory],
           backgroundColor: [
-            '#55a955',
+            '#458a45',
             '#656565',
-            'lightgrey'
+            '#e7e7e7'
           ]
         },
         {
           data: [null, percentMemory, percentFull - percentMemory],
           backgroundColor: [
-            '#55a955',
+            '#458a45',
             '#656565',
-            'lightgrey'
+            '#e7e7e7'
           ]
         }]
       },
+      plugins: [ChartDataLabels],
       options: {
-        scales: {
-          // x: {
-          //   stacked: true
-          // },
-          // y: {
-          //   stacked: true,
-          //   beginAtZero: true
-          // }
-        },
+        cutout: 35,
         plugins: {
+          datalabels: {
+            color: ['white', 'white', 'black', 'black'],
+            font: {
+              // weight: 'bold',
+              size: '14px'
+            }
+          },
           legend: {
             position: 'right',
             labels: {
@@ -232,42 +198,41 @@ export default {
             }
           }
         }
-        // plugins: [ChartDataLabels, topLabels]
       }
     });
 
     new Chart(ctx3, {
       type: 'doughnut',
       data: {
-        labels: [ 'Текущие значения', 'Текущая утилизация', 'Свободное место'],
+        labels: [ 'Текущие значения', 'Текущая утилизация %', 'Свободное место'],
         datasets: [{
           data: [recordsCurrentMaxDiskSize, null, recordsTotalMaxDiskSize - recordsCurrentMaxDiskSize],
           backgroundColor: [
-            '#55a955',
+            '#458a45',
             '#656565',
-            'lightgrey'
+            '#e7e7e7'
           ]
         },
         {
           data: [null, percentDiskSize, percentFull - percentDiskSize],
           backgroundColor: [
-            '#55a955',
+            '#458a45',
             '#656565',
-            'lightgrey'
+            '#e7e7e7'
           ]
         }]
       },
+      plugins: [ChartDataLabels],
       options: {
-        scales: {
-          // x: {
-          //   stacked: true
-          // },
-          // y: {
-          //   stacked: true,
-          //   beginAtZero: true
-          // }
-        },
+        cutout: 35,
         plugins: {
+          datalabels: {
+            color: ['white', 'white', 'black', 'black'],
+            font: {
+              // weight: 'bold',
+              size: '14px'
+            }
+          },
           legend: {
             position: 'right',
             labels: {
@@ -277,7 +242,6 @@ export default {
             }
           }
         }
-        // plugins: [ChartDataLabels, topLabels]
       }
     });
   },
@@ -314,7 +278,7 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 400px;
+  width: 450px;
   position: relative;
 }
 .canvas-pie {
@@ -330,15 +294,31 @@ export default {
 }
 .value {
   position: absolute;
-  width: 100px;
-  height: 50px;
-  bottom: 175px;
-  left: 65px;
+  width: 70px;
+  height: 70px;
+  bottom: 194px;
+  left: 96px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: .3s;
+  cursor: pointer;
+}
+.value:hover {
+  transform: scale(1.5);
+  font-size: 14px;
+  background: white;
+}
+.value:hover .max-value,
+.value:hover .type-value {
+  font-size: 16px;
 }
 .max-value {
-  font-size: 20px;
+  font-size: 12px;
 }
 .type-value {
-  font-size: 16px;
+  font-size: 12px;
 }
 </style>
