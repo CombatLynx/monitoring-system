@@ -9,8 +9,7 @@
           <ChartSliderForSystem/>
         </slide>
         <template #addons>
-          <navigation class=""/>
-          <pagination class=""/>
+          <pagination class="pagination"/>
         </template>
       </carousel>
     </div>
@@ -19,9 +18,9 @@
 
 <script>
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import ChartSliderForSystem from "@/components/GeneralInformation/ChartsSlider/ChartSliderForSystem.vue";
-import ChartSliderForVM from "@/components/GeneralInformation/ChartsSlider/ChartSliderForVM.vue";
+import { Carousel, Slide, Pagination } from 'vue3-carousel'
+import ChartSliderForSystem from "@/components/GeneralInformation/ChartsSlider/ChartSliderForSystem.vue"
+import ChartSliderForVM from "@/components/GeneralInformation/ChartsSlider/ChartSliderForVM.vue"
 
 export default {
   name: 'SliderMain',
@@ -32,20 +31,35 @@ export default {
     ChartSliderForVM,
     Carousel,
     Slide,
-    Pagination,
-    Navigation
+    Pagination
   }
 }
 </script>
 
-<style scoped>
+<style>
 .slider-block {
-  width: 80%;
+  width: calc(100% - 550px);
 }
 .slider-wrapper {
   height: 100%;
 }
 .slider {
   height: 100%;
+}
+.pagination {
+  margin-top: 30px;
+}
+.carousel__pagination-button::after {
+  width: 30px;
+  height: 6px;
+  border-radius: 6px;
+}
+.carousel__pagination-button::after {
+  background-color: white;
+  border: 1px solid #d7d7d7;
+}
+.carousel__pagination-button:hover::after,
+.carousel__pagination-button--active::after {
+  background-color: #7F7F7F;
 }
 </style>

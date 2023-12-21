@@ -1,118 +1,168 @@
 <template>
   <div class="bar-wrapper">
-    <div class="bar-header">Топ 10 VM по</div>
     <div class="bar-block">
-      <div class="bar-item"><canvas id="bar-vm_1"></canvas></div>
-      <div class="bar-item"><canvas id="bar-vm_2"></canvas></div>
-      <div class="bar-item"><canvas id="bar-vm_3"></canvas></div>
+      <div class="bar-header">Топ 10 VM по CPU</div>
+      <div class="bar-item"><canvas class="canvas-graph" id="bar-vm_1"></canvas></div>
+      <div class="bar-header">Топ 10 VM по ОЗУ</div>
+      <div class="bar-item"><canvas class="canvas-graph" id="bar-vm_2"></canvas></div>
+      <div class="bar-header">Топ 10 VM по ПЗУ</div>
+      <div class="bar-item"><canvas class="canvas-graph" id="bar-vm_3"></canvas></div>
     </div>
   </div>
 </template>
 
 <script>
 import Chart from 'chart.js/auto'
+import {recordsTop10Cpu} from "@/data/RecordsTop10Cpu"
+import {recordsTop10Memory} from "@/data/RecordsTop10Memory"
+import {recordsTop10DiskSize} from "@/data/RecordsTop10DiskSize"
 export default {
   name: 'ChartSliderForVM',
   data: () => ({
     loading: true,
-    records: [
-      { vm_name: 'vm_1',  vm_cpu: 2,  vm_memory: 2048, vm_disk_size: 4000 },
-      { vm_name: 'vm_2',  vm_cpu: 4,  vm_memory: 1024, vm_disk_size: 5000 },
-      { vm_name: 'vm_3',  vm_cpu: 16, vm_memory: 2048, vm_disk_size: 4645 },
-      { vm_name: 'vm_4',  vm_cpu: 32, vm_memory: 8192, vm_disk_size: 234 },
-      { vm_name: 'vm_5',  vm_cpu: 8,  vm_memory: 4096, vm_disk_size: 234 },
-      { vm_name: 'vm_6',  vm_cpu: 24, vm_memory: 2048, vm_disk_size: 324 },
-      { vm_name: 'vm_7',  vm_cpu: 12, vm_memory: 2048, vm_disk_size: 4234 },
-      { vm_name: 'vm_8',  vm_cpu: 12, vm_memory: 2048, vm_disk_size: 234 },
-      { vm_name: 'vm_9',  vm_cpu: 12, vm_memory: 2048, vm_disk_size: 234 },
-      { vm_name: 'vm_10', vm_cpu: 12, vm_memory: 2048, vm_disk_size: 2343 }
-    ]
+    recordsTop10Cpu: recordsTop10Cpu,
+    recordsTop10Memory: recordsTop10Memory,
+    recordsTop10DiskSize: recordsTop10DiskSize,
   }),
   mounted() {
-      const barVM1 = document.getElementById('bar-vm_1')
-      const barVM2 = document.getElementById('bar-vm_2')
-      const barVM3 = document.getElementById('bar-vm_3')
+    const barVM1 = document.getElementById('bar-vm_1')
+    const barVM2 = document.getElementById('bar-vm_2')
+    const barVM3 = document.getElementById('bar-vm_3')
 
-      // const charts = [barVM1, barVM2, barVM3]
+    // const charts = [barVM1, barVM2, barVM3]
 
-      // this.records = fetch(' https://api.github.com/search/users?q=all')
-      //     .then(res => res.json())
-      //     .then(res => res)
+    // this.records = fetch(' https://api.github.com/search/users?q=all')
+    //     .then(res => res.json())
+    //     .then(res => res)
 
-      const data = this.records
+    // const data = this.records
+    const dataCpu = this.recordsTop10Cpu
+    const dataMemory = this.recordsTop10Memory
+    const dataDiskSize = this.recordsTop10DiskSize
 
-      new Chart(barVM1, {
-        type: 'bar',
-        data: {
-          labels: data.map(row => row.vm_name),
-          datasets: [
-            {
-              label: 'ЦПУ',
-              data: data.map(row => row.vm_cpu)
-            }
-          ]
-        },
-        options: {
-          indexAxis: 'y',
-        }
-      })
+    new Chart(barVM1, {
+      type: 'bar',
+      data: {
+        labels: dataCpu.map(row => row.vm_name),
+        datasets: [
+          {
+            label: '',
+            data: dataCpu.map(row => row.vm_cpu).reverse(),
+            backgroundColor: [
+              '#55a955'
+            ]
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        responsive: true
+      }
+    })
 
-      new Chart(barVM2, {
-        type: 'bar',
-        data: {
-          labels: data.map(row => row.vm_name),
-          datasets: [
-            {
-              label: 'ОЗУ',
-              data: data.map(row => row.vm_memory)
-            }
-          ]
-        },
-        options: {
-          indexAxis: 'y',
-        }
-      })
+    new Chart(barVM2, {
+      type: 'bar',
+      data: {
+        labels: dataMemory.map(row => row.vm_name),
+        datasets: [
+          {
+            label: '',
+            data: dataMemory.map(row => row.vm_memory).reverse(),
+            backgroundColor: [
+              '#55a955'
+            ]
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        responsive: true
+      }
+    })
 
-      new Chart(barVM3, {
-        type: 'bar',
-        data: {
-          labels: data.map(row => row.vm_name),
-          datasets: [
-            {
-              label: 'ПЗУ',
-              data: data.map(row => row.vm_disk_size)
-            }
-          ]
-        },
-        options: {
-          indexAxis: 'y',
-        }
-      })
+    new Chart(barVM3, {
+      type: 'bar',
+      data: {
+        labels: dataDiskSize.map(row => row.vm_name),
+        datasets: [
+          {
+            label: '',
+            data: dataDiskSize.map(row => row.vm_disk_size).reverse(),
+            backgroundColor: [
+              '#55a955'
+            ]
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        responsive: true
+      }
+    })
   }
 }
 </script>
 
-<style scoped>
+<style>
 .bar-wrapper {
   display: flex;
   flex-direction: column;
 }
 .bar-header {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.bar-item:not(:last-child)  {
+  margin-bottom: 30px;
 }
 .bar-item {
-  width: 100%;
-  min-width: 500px;
-  max-width: 600px;
+  width: 1600px;
+  height: 300px;
 }
-.bar-item:not(:last-child) {
-  margin-bottom: 50px;
+.bar-item {
+  background: white;
+  padding: 5px 5px 15px 5px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px 0#0d234308;
 }
-.bar-item canvas {
-  width: 100%!important;
-  height: 100%!important;
+@media screen and (max-width: 2300px) {
+  .bar-item {
+    width: 1400px;
+    height: 300px;
+  }
 }
-.bar-item > canvas {
-  height: 100%;
+@media screen and (max-width: 2100px) {
+  .bar-item {
+    width: 1200px;
+    height: 300px;
+  }
+}
+@media screen and (max-width: 1900px) {
+  .bar-item {
+    width: 1000px;
+    height: 300px;
+  }
+}
+@media screen and (max-width: 1700px) {
+  .bar-item {
+    width: 800px;
+    height: 300px;
+  }
+}
+@media screen and (max-width: 1500px) {
+  .bar-item {
+    width: 600px;
+    height: 300px;
+  }
+}
+@media screen and (max-width: 1300px) {
+  .bar-item {
+    width: 400px;
+    height: 300px;
+  }
 }
 </style>

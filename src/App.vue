@@ -4,7 +4,7 @@
       <HeaderPage/>
       <NavbarPage/>
       <div class="main-content">
-        <router-link to="/" exact>Back</router-link>
+<!--        <router-link class="back" to="/" exact>Back</router-link>-->
         <MainContentPage/>
       </div>
     </div>
@@ -27,6 +27,21 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: "Tilda-Sans_extra-bold";
+  src: local("Tilda-Sans_extra-bold"),
+  url('@/assets/fonts/tilda-sans/tilda-sans_black.woff2') format("truetype");
+}
+@font-face {
+  font-family: "Tilda-Sans_light";
+  src: local("Tilda-Sans_light"),
+  url('@/assets/fonts/tilda-sans/tilda-sans_light.woff2') format("truetype");
+}
+@font-face {
+  font-family: "Tilda-Sans_regular";
+  src: local("Tilda-Sans_regular"),
+  url('@/assets/fonts/tilda-sans/tilda-sans_regular.woff2') format("truetype");
+}
 html,
 body {
   height: 100%;
@@ -36,6 +51,7 @@ body {
   margin: 0;
   padding: 0;
   font-size: 16px;
+  font-family: 'Tilda-Sans_regular', serif;
 }
 .app-wrapper {
   width: 100%;
@@ -52,10 +68,20 @@ body {
 }
 .main-content {
   grid-area: m;
-  background: #fbfbfb;
+  background: #eeeeee;
   padding: 20px;
 }
 .p-button {
-  background: #74BBE4;
+  background: #55a955;
+  border: 1px solid #3c773c;
+}
+.p-button:not(:disabled):hover {
+  border-color: #3c773c;
+}
+.p-button:focus {
+  box-shadow: 0 0 0 0.2rem rgba(85, 169, 85, 0.3);
+}
+.back {
+  position: absolute;
 }
 </style>

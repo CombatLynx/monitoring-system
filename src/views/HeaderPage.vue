@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header-logo">
-      <img src="../assets/images/logo.jpg" alt="logo">
+      <div class="text-logo">крок</div>
     </div>
     <div class="header-title">Hypervisor Parameter Monitoring System</div>
     <div class="header-auth">войти</div>
@@ -12,18 +12,24 @@
 </script>
 
 <style scoped>
+.header * {
+  font-family: 'Tilda-Sans_extra-bold', serif;
+}
 .header {
   grid-area: h;
-  background: #74BBE4;
+  background: #656565;
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 1px 1px 4px gray;
+  z-index: 1;
 }
 .header-title {
-  font-size: 24px;
-  text-shadow: 2px 7px 5px rgba(0,0,0,0.3),
-               0px -4px 10px rgba(255,255,255,0.3);
+  color: white;
+  font-size: 28px;
+  padding: 4px 12px 6px 12px;
+  border-radius: 5px;
 }
 .header-logo {
   margin-left: 20px;
@@ -37,5 +43,11 @@
   padding: 8px 20px 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 1px 1px 1px 1px black;
+}
+.text-logo {
+  text-transform: uppercase;
+  color: white;
+  font-size: 30px;
 }
 </style>

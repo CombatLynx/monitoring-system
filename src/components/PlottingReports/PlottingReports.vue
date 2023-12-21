@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="plotting-report">
     <ModalWindow
         v-show="isShowModal"
         :show="isShowModal"
@@ -12,74 +12,85 @@
         <h3 class="modal-title">Выберете параметры</h3>
       </template>
       <template v-slot:body>
-        <div v-for="(item, index) in records"
+        <div v-for="(item, index) in columns"
              :key="index"
-             @click="item.active = !item.active"
+             @click="() => onSelect(item)"
              :class="{active: item.active}"
              class="item-list">
-          <span class="title" @click="() => onSelect(item)">{{item.name}}</span>
+          <span class="title">{{item.header}}</span>
         </div>
       </template>
       <template v-slot:footer>
-        <button class="modal-footer__button" @click="sendDataFunction">Отправить</button>
+        <button class="modal-footer__button p-button" @click="sendDataFunction">Отправить</button>
       </template>
     </ModalWindow>
-    <button @click="toggleModal">
-      Open Modal
-    </button>
+    <div class="data-table__prime_button">
+      <Button label="Задать параметры" class="p-button plotting-report_button" @click="toggleModal"/>
+    </div>
   </div>
   <div class="bar-wrapper">
     <div class="bar-block">
-      <div class="bar-item"><canvas id="line-system_1"></canvas></div>
-      <div class="bar-item"><canvas id="line-system_2"></canvas></div>
-      <div class="bar-item"><canvas id="line-system_3"></canvas></div>
+      <div class="bar-header">ЦПУ</div>
+      <div class="bar-item"><canvas class="canvas-graph" id="line-system_1"></canvas></div>
+      <div class="bar-header">ОЗУ</div>
+      <div class="bar-item"><canvas class="canvas-graph" id="line-system_2"></canvas></div>
+      <div class="bar-header">ПЗУ</div>
+      <div class="bar-item"><canvas class="canvas-graph" id="line-system_3"></canvas></div>
     </div>
   </div>
 </template>
 <script>
 import Chart from 'chart.js/auto'
 import ModalWindow from "@/utils/ModalWindow.vue"
+import {dataTable} from "@/data/DataTable"
 export default {
   name: 'ChartSliderForSystem',
   components: {ModalWindow},
   data: () => ({
-    clickedItems: [],
+    clickedColumns: [],
+    filteredColumns: [],
     isShowModal: false,
     loading: true,
     dataChart: [10, 39, 10, 40, 39, 0, 10],
-    records: [
-      { id: 1, System: 'system_1',  vm_cpu: 2,  vm_memory: 2048, vm_disk_size: 4000, report_date: '06.09.2023 15:28:52', name: 'Наименование ВМ'},
-      { id: 2, System: 'system_2',  vm_cpu: 4,  vm_memory: 1024, vm_disk_size: 5000, report_date: '06.09.2023 15:28:52', name: 'Наименование ИС' },
-      { id: 3, System: 'system_3',  vm_cpu: 16, vm_memory: 2048, vm_disk_size: 4645, report_date: '06.09.2023 15:28:52', name: 'Владелец' },
-      { id: 4, System: 'system_4',  vm_cpu: 32, vm_memory: 8192, vm_disk_size: 234,  report_date: '06.09.2023 15:28:52', name: 'Приоритет восстановления' },
-      { id: 5, System: 'system_5',  vm_cpu: 8,  vm_memory: 4096, vm_disk_size: 234,  report_date: '06.09.2023 15:28:52', name: 'Операционная система' },
-      { id: 6, System: 'system_6',  vm_cpu: 24, vm_memory: 2048, vm_disk_size: 324,  report_date: '06.09.2023 15:28:52', name: 'Семейство ОС' },
-      { id: 7, System: 'system_7',  vm_cpu: 12, vm_memory: 2048, vm_disk_size: 4234, report_date: '06.09.2023 15:28:52', name: 'Версия ОС' }
-    ]
+    records: dataTable,
+    columns: [
+      {header: "Наименование ВМ", field: "vm_name"},
+      {header: "Операционная система", field: "vm_os_distribution"},
+      {header: "Семейство ОС", field: "vm_os_family"},
+      {header: "Версия ОС", field: "vm_os_version"},
+      {header: "Наименование ИС", field: "System"},
+      {header: "Владелец ", field: "Owner"},
+      {header: "Приоритет восстановления", field: "Priority"}
+    ],
   }),
   mounted() {
     this.toggleModal()
     this.renderLineChart()
   },
   methods: {
+    filteringColumns() {
+      this.filteredColumns = this.clickedColumns
+    },
     toggleModal() {
-      this.isShowModal = !this.isShowModal;
+      this.isShowModal = !this.isShowModal
     },
     onSelect(item) {
-      let position;
-      position = this.clickedItems.indexOf(item)
+      item.active = !item.active
+      let position = this.clickedColumns.indexOf(item)
       if (!~position) {
-        this.clickedItems.push(item)
+        this.clickedColumns.push(item)
       } else {
-        this.clickedItems.splice(position, 1)
+        this.clickedColumns.splice(position, 1)
       }
-      console.log(this.clickedItems)
+      console.log(this.clickedColumns)
     },
     sendDataFunction: function() {
-      this.changeData()
-      this.dataChart = [6, 6, 3, 5, 5, 6, 6, 6, 3, 5, 5, 6]
-      this.toggleModal()
-      console.log('clickedItems', this.clickedItems)
+      if (this.clickedColumns.length === 0) {
+        alert('Выбери что-то')
+      } else {
+        this.filteringColumns()
+        this.toggleModal()
+      }
     },
     renderLineChart: function() {
       const lineSystem1 = document.getElementById('line-system_1')
@@ -107,16 +118,21 @@ export default {
       new Chart(lineSystem1, {
         type: 'line',
         data: {
-          labels: this.dataChart,
+          labels: labels,
           datasets: [
             {
-              label: 'ЦПУ',
-              data: data.map(row => row.vm_cpu)
+              label: '',
+              data: data.map(row => row.vm_cpu),
+              backgroundColor: [
+                '#55a955'
+              ]
             }
           ]
         },
         options: {
           indexAxis: 'x',
+          maintainAspectRatio: false,
+          responsive: true
         }
       })
 
@@ -126,13 +142,18 @@ export default {
           labels: labels,
           datasets: [
             {
-              label: 'ОЗУ',
-              data: data.map(row => row.vm_memory)
+              label: '',
+              data: data.map(row => row.vm_memory),
+              backgroundColor: [
+                '#55a955'
+              ]
             }
           ]
         },
         options: {
           indexAxis: 'x',
+          maintainAspectRatio: false,
+          responsive: true
         }
       })
 
@@ -142,13 +163,18 @@ export default {
           labels: labels,
           datasets: [
             {
-              label: 'ПЗУ',
-              data: data.map(row => row.vm_disk_size)
+              label: '',
+              data: data.map(row => row.vm_disk_size),
+              backgroundColor: [
+                '#55a955'
+              ]
             }
           ]
         },
         options: {
           indexAxis: 'x',
+          maintainAspectRatio: false,
+          responsive: true
         }
       })
     },
@@ -166,10 +192,6 @@ export default {
 </script>
 
 <style scoped>
-div.active {
-  background: #efefef;
-  border-radius: 5px;
-}
 .item-list {
   cursor: pointer;
   margin: 10px auto;
@@ -180,22 +202,61 @@ div.active {
   flex-direction: column;
 }
 .bar-header {
+  font-size: 20px;
+  font-weight: bold;
+}
+.bar-block {
+  margin: 0 auto;
+}
+.plotting-report .item-list {
+  border-radius: 5px;
+}
+.plotting-report .item-list:hover {
+  background: #efefef;
+}
+.plotting-report .item-list.active {
+  background: #C5C4C4;
+}
+.data-table__prime_button {
+  display: flex;
   margin-bottom: 20px;
 }
+.bar-header {
+  margin-bottom: 20px;
+}
+.plotting-report_button {
+  padding: 5px;
+}
 .bar-item {
-  width: 100%;
-  min-width: 500px;
-  max-width: 600px;
+  width: 1600px;
+  height: 290px;
 }
 .bar-item:not(:last-child) {
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
-.bar-item canvas {
-  width: 100%!important;
-  height: 100%!important;
+.modal-footer__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.bar-item > canvas {
-  height: 100%;
+@media screen and (max-width: 1800px) {
+  .bar-item {
+    width: 1400px;
+  }
+}
+@media screen and (max-width: 1550px) {
+  .bar-item {
+    width: 1200px;
+  }
+}
+@media screen and (max-width: 1350px) {
+  .bar-item {
+    width: 1000px;
+  }
+}
+@media screen and (max-width: 1150px) {
+  .bar-item {
+    width: 800px;
+  }
 }
 </style>
-}

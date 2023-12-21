@@ -53,21 +53,25 @@ export default {
 }
 a.router-link-active {
   background: white!important;
+  cursor: default;
 }
 .navbar-item {
   position: relative;
   margin-top: 30px;
+  box-shadow: 1px 1px 1px 1px black;
+  border-radius: 5px;
+  background: #C5C4C4;
 }
 .navbar-item .overlay {
   position: absolute;
   display: none;
   background: white;
-  border: 1px solid black;
-  top: 0;
-  left: 100%;
+  top: -10px;
+  left: 65px;
   padding: 5px;
   border-radius: 5px;
   z-index: 1;
+  box-shadow: 1px 1px 1px 1px black;
 }
 .navbar-item:hover .overlay {
   display: block;
