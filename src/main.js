@@ -4,6 +4,7 @@ import router from "@/router"
 import 'vue3-easy-data-table/dist/style.css'
 import PrimeVue from 'primevue/config'
 import DataTable from 'primevue/datatable'
+import Calendar from 'primevue/calendar'
 import Column from 'primevue/column'
 import ColumnGroup from 'primevue/columngroup'
 import Row from 'primevue/row'
@@ -16,6 +17,7 @@ createApp(App)
     .use(router)
     .use(PrimeVue)
     .component("DataTable", DataTable)
+    .component("Calendar", Calendar)
     .component("Column", Column)
     .component("ColumnGroup", ColumnGroup)
     .component('Row', Row)

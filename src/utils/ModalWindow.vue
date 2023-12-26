@@ -98,7 +98,7 @@ export default {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     transition: opacity 0.3s ease;
-    z-index: 9999;
+    z-index: 9;
   }
 
   &-container {

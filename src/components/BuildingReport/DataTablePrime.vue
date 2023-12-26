@@ -12,6 +12,9 @@
         <h3 class="modal-title">Выберете параметры</h3>
       </template>
       <template v-slot:body>
+        <div class="calendar">
+          <Calendar v-model="buttondisplay" showIcon />
+        </div>
         <div v-for="(item, index) in columns"
              :key="index"
              @click="() => onSelect(item)"

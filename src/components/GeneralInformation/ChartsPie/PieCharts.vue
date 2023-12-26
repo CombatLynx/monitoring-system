@@ -279,6 +279,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   width: 450px;
+  height: 450px;
   position: relative;
 }
 .canvas-pie {

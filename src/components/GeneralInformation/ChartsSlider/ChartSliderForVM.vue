@@ -67,12 +67,7 @@ export default {
             }
           },
           legend: {
-            position: 'top',
-            labels: {
-              font: {
-                align: 'end',
-              }
-            }
+            display: false
           }
         },
         indexAxis: 'y',
@@ -107,12 +102,7 @@ export default {
             }
           },
           legend: {
-            position: 'top',
-            labels: {
-              font: {
-                align: 'end',
-              }
-            }
+            display: false
           }
         },
         indexAxis: 'y',
@@ -147,12 +137,7 @@ export default {
             }
           },
           legend: {
-            position: 'top',
-            labels: {
-              font: {
-                align: 'end',
-              }
-            }
+            display: false
           }
         },
         indexAxis: 'y',
