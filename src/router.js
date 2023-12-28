@@ -7,6 +7,10 @@ const routes = [
         component: MainContentPage,
     },
     {
+        path: "/login",
+        component: () => import('./components/Authorization/AuthorizationPage.vue')
+    },
+    {
         path: "/general-information",
         component: () => import('./components/GeneralInformation/GeneralInformation.vue')
     },

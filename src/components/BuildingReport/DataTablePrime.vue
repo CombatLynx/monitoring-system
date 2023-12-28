@@ -15,14 +15,14 @@
       <div class="modal-container">
         <div class="modal-header">
           <div class="header-choice">
-            <div>
+            <div class="calendar-block">
               <div class="flex-auto">
                 <label for="buttondisplay" class="font-bold block mb-2"> Button Display </label>
                 <Calendar v-model="buttondisplay" showIcon inputId="buttondisplay" />
               </div>
             </div>
-            <div>
-              <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-14rem" />
+            <div class="dropdown-block">
+              <Dropdown v-model="selectedCity" :options="clickedColumns" optionLabel="header" placeholder="Выберете шаблон  " class="w-full md:w-14rem" />
             </div>
           </div>
           <div class="header-selected">
@@ -49,11 +49,17 @@
             <button type="submit"
                     @click="() => onSelectAll()"
                     v-bind:disabled="isDisabledLeftButton"
-                    class="arrow-right">----x</button>
+                    :class="{'disabled' : isDisabledLeftButton === true}"
+                    class="arrow-right">
+              <img src="@/assets/images/arrow-narrow-right.svg" alt="arrow-right">
+            </button>
             <button type="submit"
                     @click="() => onRemoveAll()"
                     v-bind:disabled="!isDisabledRightButton"
-                    class="arrow-left">x----</button>
+                    :class="{'disabled' : isDisabledRightButton === false}"
+                    class="arrow-left">
+              <img src="@/assets/images/arrow-narrow-left.svg" alt="arrow-left">
+            </button>
           </div>
           <div class="modal-selected">
             <div v-for="(item, index) in clickedColumns"
@@ -98,7 +104,7 @@ import {dataTable} from "@/data/DataTable"
 import {FilterMatchMode} from "primevue/api"
 import {excelParser} from "@/utils/ExcelParser"
 import ModalWindow from "@/utils/ModalWindow.vue"
-import {defineComponent, ref} from "vue"
+import {defineComponent} from "vue"
 
 export default defineComponent({
   name: 'DataTablePrime',
@@ -106,10 +112,11 @@ export default defineComponent({
   mounted() {
     this.toggleModal()
   },
-  setup() {
-    return ref("")
-  },
   data: () => ({
+    buttondisplay: null,
+    icondisplay: null,
+    templatedisplay: null,
+    selectedCity: null,
     cities: [
       { name: 'New York', code: 'NY' },
       { name: 'Rome', code: 'RM' },
@@ -247,6 +254,7 @@ export default defineComponent({
   width: 100%;
 }
 .modal-arrow {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -254,9 +262,35 @@ export default defineComponent({
   width: 100%;
   max-width: 60px;
 }
+.modal-arrow .disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+.modal-arrow button {
+  width: 28px;
+  height: 28px;
+  position: absolute;
+}
+.modal-arrow button:first-child {
+  margin-bottom: 5px;
+  top: 160px;
+}
+.modal-arrow button:last-child {
+  margin-top: 5px;
+  top: 193px;
+}
 .arrow-left,
 .arrow-right {
   cursor: pointer;
+}
+.calendar-block label {
+  display: none;
+}
+.calendar-block button {
+  width: 40px;
+}
+.calendar-block input {
+  text-align: center;
 }
 .calendar .list-item {
   margin-top: 50px;
@@ -276,6 +310,10 @@ export default defineComponent({
   padding: 10px 15px;
   background-color: #c1c1c1;
   border-radius: 10px;
+}
+.dropdown-block .p-dropdown-label {
+  width: 150px;
+  height: 34px;
 }
 .data-table__prime .p-datatable-wrapper {
   border-radius: 10px;
@@ -312,72 +350,77 @@ export default defineComponent({
 .data-table__prime .export-data {
   padding: 5px;
 }
-.p-paginator .p-paginator-pages .p-paginator-page {
+.data-table__prime .p-paginator .p-paginator-pages .p-paginator-page {
   color: #656565;
 }
-.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+.data-table__prime .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
   background: #458a45;
   border-color: #458a45;
   color: white;
 }
-.p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
+.data-table__prime .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
   background: #55a95587;
   border-color: #55a95587;
 }
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-  padding: 5px;
-}
-.p-dropdown {
+.data-table__prime .p-dropdown {
   border-radius: 5px;
 }
-.p-dropdown-label {
+.data-table__prime .p-dropdown-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.data-table__prime .p-paginator .p-dropdown-label {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 50px;
 }
-.p-dropdown:not(.p-disabled):hover {
+.data-table__prime .p-dropdown:not(.p-disabled):hover {
   border-color: #458a45;
 }
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+.data-table__prime .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
   background: #55a95587;
 }
-.p-dropdown:not(.p-disabled).p-focus {
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  padding: 10px!important;
+}
+.data-table__prime .p-dropdown:not(.p-disabled).p-focus {
   border-color: #55a95587;
   box-shadow: 0 0 0 0.2rem #55a95587;
 }
-.p-datatable-table * {
+.data-table__prime .p-datatable-table * {
   padding: 4px 6px 4px 6px;
 }
-.p-datatable-table td {
+.data-table__prime .p-datatable-table td {
   padding: 8px 6px 8px 20px;
 }
-.p-column-header-content svg {
+.data-table__prime .p-column-header-content svg {
   width: 25px;
   height: 25px;
 }
-.p-column-filter button {
+.data-table__prime .p-column-filter button {
   display: none;
 }
-.p-datatable .p-sortable-column:not(.p-highlight):hover,
-.p-datatable .p-sortable-column:not(.p-highlight):hover svg {
+.data-table__prime .p-datatable .p-sortable-column:not(.p-highlight):hover,
+.data-table__prime .p-datatable .p-sortable-column:not(.p-highlight):hover svg {
   background: #495057;
   color: #e9ecef;
 }
-.p-datatable .p-sortable-column.p-highlight,
-.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+.data-table__prime .p-datatable .p-sortable-column.p-highlight,
+.data-table__prime .p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
   color: #495057;
 }
-.p-datatable .p-sortable-column.p-highlight:hover {
+.data-table__prime .p-datatable .p-sortable-column.p-highlight:hover {
   background: #C5C4C4;
 }
-.p-inputtext:enabled:focus {
+.data-table__prime .p-inputtext:enabled:focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #C5C4C4;
   border-color: #495057;
 }
-.p-inputtext:enabled:hover {
+.data-table__prime .p-inputtext:enabled:hover {
   border-color: #495057;
 }
 </style>

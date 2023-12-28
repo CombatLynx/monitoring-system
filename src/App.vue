@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import MainContentPage from "@/views/MainContentPage.vue";
-import NavbarPage from "@/views/NavbarPage.vue";
-import HeaderPage from "@/views/HeaderPage.vue";
+import MainContentPage from "@/views/MainContentPage.vue"
+import NavbarPage from "@/views/NavbarPage.vue"
+import HeaderPage from "@/views/HeaderPage.vue"
 
 export default {
   name: 'App',

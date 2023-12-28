@@ -4,7 +4,7 @@
       <div class="text-logo">крок</div>
     </div>
     <div class="header-title">Hypervisor Parameter Monitoring System</div>
-    <div class="header-auth">войти</div>
+    <router-link class="header-auth router-link" to="/login">войти</router-link>
   </div>
 </template>
 
