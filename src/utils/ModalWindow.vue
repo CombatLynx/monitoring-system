@@ -121,38 +121,48 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    max-width: 500px;
-    margin: 5.4rem auto;
-    padding: 20px 30px;
+    max-width: 1000px;
+    margin: 60px auto;
     color: #000;
     background-color: #fff;
     box-sizing: border-box;
     transform: translate(0, 0);
     transition: all 0.3s ease;
-    border-radius: 10px;
-    border: 5px solid #C5C4C4;
+    border-radius: 12px;
   }
 
   &-header {
-    padding-bottom: 16px;
-    font-size: 25px;
     text-align: center;
+    background: #656565;
+    padding: 20px;
+    color: white;
+    border-radius: 10px 10px 0 0;
+  }
+
+  &-header > div {
+    font-size: 22px;
   }
 
   &-body {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    padding: 20px 30px 0 30px;
   }
 
   &-footer {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 80px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
     text-align: center;
+    padding: 0 30px 20px 20px;
   }
 
   &-footer button {
     padding: 5px 0 5px 0;
+  }
+
+  &-footer button:first-child {
+    margin-right: 20px;
   }
 
   &-enter,

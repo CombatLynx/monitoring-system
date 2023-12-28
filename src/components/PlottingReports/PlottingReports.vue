@@ -9,7 +9,7 @@
         @close="toggleModal"
     >
       <template v-slot:header>
-        <h3 class="modal-title">Выберете параметры</h3>
+        <div class="modal-title">Выберете параметры</div>
       </template>
       <template v-slot:body>
         <div v-for="(item, index) in columns"

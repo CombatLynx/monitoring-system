@@ -74,6 +74,9 @@ body {
 .p-button {
   background: #458a45;
   border: 1px solid #3c773c;
+  border-radius: 5px;
+  width: 150px;
+  height: 35px;
 }
 .p-button:not(:disabled):hover {
   border-color: #3c773c;

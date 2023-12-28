@@ -12,11 +12,13 @@ import 'primevue/resources/primevue.min.css'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import InputText from "primevue/inputtext"
 import Button from 'primevue/button'
+import Dropdown from 'primevue/dropdown'
 
 createApp(App)
     .use(router)
     .use(PrimeVue)
     .component("DataTable", DataTable)
+    .component("Dropdown", Dropdown)
     .component("Calendar", Calendar)
     .component("Column", Column)
     .component("ColumnGroup", ColumnGroup)
